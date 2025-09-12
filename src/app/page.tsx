@@ -1,103 +1,475 @@
-import Image from "next/image";
+'use client'
+
+import { motion, useScroll, useTransform } from 'framer-motion'
+import {
+  Zap,
+  Shield,
+  Palette,
+  Code2,
+  TestTube,
+  Rocket,
+  Star,
+  CheckCircle,
+  Copy,
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
+
+// Enhanced Tech Stack Data with Visual Elements
+const techStackCategories = [
+  {
+    id: 'core',
+    category: 'Core Stack',
+    icon: Code2,
+    progress: 100,
+    technologies: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS v4'],
+    features: [
+      'App Router',
+      'Concurrent Features',
+      'Type Safety',
+      'Utility-First',
+    ],
+    color: '#667eea',
+  },
+  {
+    id: 'ui',
+    category: 'UI & UX',
+    icon: Palette,
+    progress: 95,
+    technologies: [
+      'Framer Motion',
+      'Radix UI',
+      'Lucide React',
+      'React Hook Form',
+    ],
+    features: [
+      'Smooth Animations',
+      'Accessible Components',
+      'Beautiful Icons',
+      'Form Validation',
+    ],
+    color: '#764ba2',
+  },
+  {
+    id: 'dev',
+    category: 'Development Tools',
+    icon: Shield,
+    progress: 98,
+    technologies: [
+      'ESLint + Prettier',
+      'Husky + Lint-staged',
+      'Commitizen',
+      'Release Please',
+      'TypeScript Config',
+      'Git Hooks',
+    ],
+    features: [
+      'Code Quality',
+      'Pre-commit Checks',
+      'Conventional Commits',
+      'Automated Releases',
+      'Type Safety',
+      'Git Integration',
+    ],
+    color: '#42a5f5',
+    isLarge: true,
+  },
+  {
+    id: 'test',
+    category: 'Testing',
+    icon: TestTube,
+    progress: 90,
+    technologies: ['Jest', 'Playwright', 'Testing Library', 'Coverage'],
+    features: [
+      'Unit Tests',
+      'E2E Testing',
+      'Component Tests',
+      'Coverage Reports',
+    ],
+    color: '#26a69a',
+  },
+  {
+    id: 'perf',
+    category: 'Performance',
+    icon: Zap,
+    progress: 92,
+    technologies: [
+      'Vercel Analytics',
+      'Speed Insights',
+      'Bundle Analyzer',
+      'SEO',
+    ],
+    features: [
+      'Web Vitals',
+      'Performance Monitoring',
+      'Size Analysis',
+      'Search Optimization',
+    ],
+    color: '#ffa726',
+  },
+  {
+    id: 'content',
+    category: 'Content & More',
+    icon: Rocket,
+    progress: 88,
+    technologies: [
+      'MDX',
+      'Gray Matter',
+      'Reading Time',
+      'Error Boundaries',
+      'Structured Data',
+    ],
+    features: [
+      'Markdown + JSX',
+      'Frontmatter',
+      'Reading Stats',
+      'Error Handling',
+      'SEO Data',
+    ],
+    color: '#ab47bc',
+  },
+]
+
+// Scroll-triggered animation hook
+const useScrollAnimation = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    const elements = document.querySelectorAll(
+      '.scroll-fade-in, .scroll-slide-left, .scroll-slide-right'
+    )
+    elements.forEach(el => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [mounted, setMounted] = useState(false)
+  const { scrollY } = useScroll()
+  const heroY = useTransform(scrollY, [0, 300], [0, -50])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useScrollAnimation()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  return (
+    <div className="scrollable-page-container">
+      <div className="content-wrapper">
+        {/* Enhanced Hero Section */}
+        <motion.section style={{ y: heroY }} className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="mb-8"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{
+                backgroundColor: 'var(--primary-soft-blue)',
+                color: 'var(--text-accent)',
+              }}
+            >
+              <Star className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                Production Ready Boilerplate
+              </span>
+            </motion.div>
+
+            <h1
+              className="text-4xl font-bold mb-4"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Next.js Landing Page
+              <span
+                className="block bg-gradient-to-r bg-clip-text text-transparent mt-2"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                }}
+              >
+                Boilerplate
+              </span>
+            </h1>
+
+            <p
+              className="text-lg mb-8 max-w-3xl mx-auto leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              A comprehensive, production-ready Next.js boilerplate with
+              cutting-edge tools, best practices, and stunning visual design for
+              modern landing pages.
+            </p>
+
+            {/* Get Started Section - Moved Up */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="mb-12"
+            >
+              <h3
+                className="text-2xl font-bold mb-6 text-center"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Get Started in Minutes
+              </h3>
+
+              <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                {[
+                  {
+                    step: '1',
+                    command:
+                      'git clone https://github.com/Heepo-tech/project-boilerplate.git',
+                    description: 'Clone the repository',
+                  },
+                  {
+                    step: '2',
+                    command: 'npm install',
+                    description: 'Install dependencies',
+                  },
+                  {
+                    step: '3',
+                    command: 'npm run dev',
+                    description: 'Start development server',
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 + index * 0.1 }}
+                    className="p-4 rounded-xl border h-full flex flex-col"
+                    style={{
+                      backgroundColor: 'var(--neutral-white)',
+                      border: '1px solid var(--neutral-medium)',
+                    }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-bold text-white"
+                      style={{
+                        background:
+                          'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      }}
+                    >
+                      {item.step}
+                    </div>
+                    <h4
+                      className="font-semibold mb-2 flex-shrink-0"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {item.description}
+                    </h4>
+                    <div className="relative mt-auto">
+                      <div
+                        className="p-2 pr-12 rounded-lg font-mono text-sm min-h-[2.5rem] flex items-center"
+                        style={{
+                          backgroundColor: 'var(--neutral-light)',
+                          color: 'var(--text-primary)',
+                          wordBreak: 'break-all',
+                        }}
+                      >
+                        {item.command}
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() =>
+                          navigator.clipboard.writeText(item.command)
+                        }
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 rounded-md transition-all duration-200 hover:bg-white/80"
+                        style={{ color: 'var(--text-muted)' }}
+                        title="Copy to clipboard"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.section>
+
+        {/* Enhanced Bento Grid */}
+        <section>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold text-center mb-3"
+            style={{ color: 'var(--text-primary)' }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Complete Tech Stack
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-base text-center mb-10 max-w-2xl mx-auto"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Modern tools and frameworks carefully selected for optimal developer
+            experience and production performance
+          </motion.p>
+
+          <div className="bento-grid">
+            {/* Hero Showcase Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="hero-showcase-card bento-card"
+            >
+              <div className="floating-shapes">
+                <div className="floating-shape"></div>
+                <div className="floating-shape"></div>
+                <div className="floating-shape"></div>
+              </div>
+
+              <div className="relative z-10 h-full flex flex-col justify-center text-center">
+                <h3 className="text-2xl font-bold mb-3">Next.js 15 Ready</h3>
+                <p className="text-base opacity-90 mb-4">
+                  Built with the latest Next.js features including App Router,
+                  Server Components, and Turbopack for lightning-fast
+                  development.
+                </p>
+                <div className="flex justify-center gap-4">
+                  <div className="feature-badge">
+                    <CheckCircle className="w-4 h-4" />
+                    App Router
+                  </div>
+                  <div className="feature-badge">
+                    <Zap className="w-4 h-4" />
+                    Turbopack
+                  </div>
+                  <div className="feature-badge">
+                    <Shield className="w-4 h-4" />
+                    TypeScript
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Tech Stack Cards */}
+            {techStackCategories.map((category, index) => (
+              <motion.div
+                key={category.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className={`bento-card bento-${category.id} card-type-${category.id} ${category.isLarge ? 'scroll-fade-in' : 'scroll-slide-right'}`}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="tech-icon"
+                    style={{
+                      background: `linear-gradient(135deg, ${category.color}, ${category.color}90)`,
+                    }}
+                  >
+                    <category.icon
+                      className="relative z-10 w-6 h-6"
+                      style={{ color: 'white' }}
+                    />
+                  </div>
+                  <div>
+                    <h3
+                      className="text-lg font-bold mb-1"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {category.category}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <div className="progress-bar">
+                        <motion.div
+                          className="progress-fill"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${category.progress}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: 0.5 }}
+                        />
+                      </div>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: 'var(--text-accent)' }}
+                      >
+                        {category.progress}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  {category.isLarge ? (
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      {category.technologies.map(tech => (
+                        <div
+                          key={tech}
+                          className="flex items-center justify-between p-3 rounded-lg bg-white/50"
+                        >
+                          <span
+                            className="text-sm font-medium"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
+                            {tech}
+                          </span>
+                          <CheckCircle
+                            className="w-4 h-4"
+                            style={{ color: category.color }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-1 mb-3">
+                      {category.technologies.slice(0, 4).map(tech => (
+                        <div key={tech} className="flex items-center gap-2">
+                          <div
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: category.color }}
+                          />
+                          <span
+                            className="text-sm"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
+                            {tech}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {category.features
+                      .slice(0, category.isLarge ? 6 : 3)
+                      .map(feature => (
+                        <span key={feature} className="feature-badge">
+                          {feature}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
-  );
+  )
 }
