@@ -39,3 +39,6 @@ pnpm-lock.yaml
 
 # Git
 .git
+
+# Claude settings (local only)
+.claude/
