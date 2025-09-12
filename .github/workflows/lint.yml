@@ -14,7 +14,7 @@ jobs:
     name: ⬣ ESLint, ʦ TypeScript, 💅 Prettier, and 🃏 Test
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: ⎔ Setup node
@@ -23,17 +23,17 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: 📥 Download deps
+      - name: Download deps
         run: npm ci
 
-      - name: 🔬 Lint
+      - name: Lint
         run: npm run lint
 
-      - name: 💅 Prettier check
+      - name: Prettier check
         run: npm run format:check
 
-      - name: 🃏 Run jest (allow failures for now)
+      - name: Run jest (allow failures for now)
         run: npm run test || echo "Tests have some issues - continuing for now"
 
-      - name: 🏗️ Build check
+      - name: Build check
         run: npm run build
