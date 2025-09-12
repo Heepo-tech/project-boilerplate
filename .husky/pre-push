@@ -1,0 +1,15 @@
+echo "🚀 Running pre-push checks..."
+
+# Run lint (warnings are OK, errors will fail)
+echo "🔍 Linting code..."
+npm run lint
+
+# Check formatting
+echo "💅 Checking code formatting..."
+npm run format:check
+
+# Build the project to ensure it compiles
+echo "🏗️ Building project..."
+npm run build
+
+echo "✅ Pre-push checks completed successfully!"
