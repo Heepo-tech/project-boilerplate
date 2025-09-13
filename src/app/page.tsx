@@ -20,7 +20,6 @@ const techStackCategories = [
     id: 'core',
     category: 'Core Stack',
     icon: Code2,
-    progress: 100,
     technologies: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS v4'],
     features: [
       'App Router',
@@ -34,7 +33,6 @@ const techStackCategories = [
     id: 'ui',
     category: 'UI & UX',
     icon: Palette,
-    progress: 95,
     technologies: [
       'Framer Motion',
       'Radix UI',
@@ -53,7 +51,6 @@ const techStackCategories = [
     id: 'dev',
     category: 'Development Tools',
     icon: Shield,
-    progress: 98,
     technologies: [
       'ESLint + Prettier',
       'Husky + Lint-staged',
@@ -77,7 +74,6 @@ const techStackCategories = [
     id: 'test',
     category: 'Testing',
     icon: TestTube,
-    progress: 90,
     technologies: ['Jest', 'Playwright', 'Testing Library', 'Coverage'],
     features: [
       'Unit Tests',
@@ -91,7 +87,6 @@ const techStackCategories = [
     id: 'perf',
     category: 'Performance',
     icon: Zap,
-    progress: 92,
     technologies: [
       'Vercel Analytics',
       'Speed Insights',
@@ -110,7 +105,6 @@ const techStackCategories = [
     id: 'content',
     category: 'Content & More',
     icon: Rocket,
-    progress: 88,
     technologies: [
       'MDX',
       'Gray Matter',
@@ -343,25 +337,13 @@ export default function Home() {
               </div>
 
               <div className="relative z-10 h-full flex flex-col justify-center text-center">
-                <h3 className="text-2xl font-bold mb-3">Next.js 15 Ready</h3>
-                <p className="text-base opacity-90 mb-4">
-                  Built with the latest Next.js features including App Router,
-                  Server Components, and Turbopack for lightning-fast
-                  development.
-                </p>
-                <div className="flex justify-center gap-4">
-                  <div className="feature-badge">
-                    <CheckCircle className="w-4 h-4" />
-                    App Router
-                  </div>
-                  <div className="feature-badge">
-                    <Zap className="w-4 h-4" />
-                    Turbopack
-                  </div>
-                  <div className="feature-badge">
-                    <Shield className="w-4 h-4" />
-                    TypeScript
-                  </div>
+                <div className="hero-content-backdrop">
+                  <h3 className="text-2xl font-bold mb-3">Next.js 15 Ready</h3>
+                  <p className="text-base opacity-90 mb-4">
+                    Built with the latest Next.js features including App Router,
+                    Server Components, and Turbopack for lightning-fast
+                    development.
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -376,43 +358,13 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`bento-card bento-${category.id} card-type-${category.id} ${category.isLarge ? 'scroll-fade-in' : 'scroll-slide-right'}`}
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="tech-icon"
-                    style={{
-                      background: `linear-gradient(135deg, ${category.color}, ${category.color}90)`,
-                    }}
+                <div className="mb-4">
+                  <h3
+                    className="text-lg font-bold mb-1"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <category.icon
-                      className="relative z-10 w-6 h-6"
-                      style={{ color: 'white' }}
-                    />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-lg font-bold mb-1"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {category.category}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      <div className="progress-bar">
-                        <motion.div
-                          className="progress-fill"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${category.progress}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.5 }}
-                        />
-                      </div>
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: 'var(--text-accent)' }}
-                      >
-                        {category.progress}%
-                      </span>
-                    </div>
-                  </div>
+                    {category.category}
+                  </h3>
                 </div>
 
                 <div className="flex-1">
@@ -454,16 +406,6 @@ export default function Home() {
                       ))}
                     </div>
                   )}
-
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {category.features
-                      .slice(0, category.isLarge ? 6 : 3)
-                      .map(feature => (
-                        <span key={feature} className="feature-badge">
-                          {feature}
-                        </span>
-                      ))}
-                  </div>
                 </div>
               </motion.div>
             ))}
