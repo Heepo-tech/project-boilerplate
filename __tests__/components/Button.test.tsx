@@ -43,10 +43,8 @@ describe('Button Component', () => {
 
     const button = screen.getByRole('button')
     expect(button).toBeDisabled()
-    expect(button).toHaveClass(
-      'disabled:opacity-50',
-      'disabled:cursor-not-allowed'
-    )
+    expect(button).toHaveClass('disabled:opacity-50')
+    expect(button).toHaveClass('disabled:pointer-events-none')
   })
 
   it('handles click events', () => {
