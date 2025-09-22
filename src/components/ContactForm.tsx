@@ -37,20 +37,19 @@ export default function ContactForm({ className }: ContactFormProps) {
     resolver: zodResolver(contactSchema),
   })
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async () => {
     setIsSubmitting(true)
 
     // Simulate API call
     try {
       await new Promise(resolve => setTimeout(resolve, 2000))
-      console.log('Contact form data:', data)
       setIsSubmitted(true)
       reset()
 
       // Reset success message after 5 seconds
       setTimeout(() => setIsSubmitted(false), 5000)
-    } catch (error) {
-      console.error('Error submitting form:', error)
+    } catch {
+      // Handle error silently or use proper error handling
     } finally {
       setIsSubmitting(false)
     }

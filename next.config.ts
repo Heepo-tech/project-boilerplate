@@ -43,12 +43,10 @@ const nextConfig: NextConfig = {
     ]
   },
 
-  // Experimental features
-  experimental: {
-    turbo: {
-      rules: {
-        // Add custom turbo rules if needed
-      },
+  // Turbopack configuration
+  turbopack: {
+    rules: {
+      // Add custom turbo rules if needed
     },
   },
 }
