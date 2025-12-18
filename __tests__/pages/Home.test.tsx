@@ -16,48 +16,34 @@ describe('Home Page', () => {
   it('renders the main heading', () => {
     render(<Home />)
 
-    const nextLogo = screen.getByAltText('Next.js logo')
-    expect(nextLogo).toBeInTheDocument()
+    const heading = screen.getByRole('heading', {
+      name: /next\.js landing page boilerplate/i,
+    })
+    expect(heading).toBeInTheDocument()
   })
 
-  it('renders getting started text', () => {
+  it('renders production ready badge', () => {
     render(<Home />)
-
-    const gettingStartedText = screen.getByText(/Get started by editing/)
-    expect(gettingStartedText).toBeInTheDocument()
+    expect(
+      screen.getByText(/production ready boilerplate/i)
+    ).toBeInTheDocument()
   })
 
-  it('renders deploy button', () => {
+  it('renders get started section', () => {
     render(<Home />)
-
-    const deployButton = screen.getByRole('link', { name: /deploy now/i })
-    expect(deployButton).toBeInTheDocument()
-    expect(deployButton).toHaveAttribute(
-      'href',
-      expect.stringContaining('vercel.com')
-    )
+    expect(
+      screen.getByRole('heading', { name: /get started in minutes/i })
+    ).toBeInTheDocument()
+    expect(screen.getByText(/npm run dev/i)).toBeInTheDocument()
   })
 
-  it('renders documentation link', () => {
+  it('renders tech stack section', () => {
     render(<Home />)
-
-    const docsLink = screen.getByRole('link', { name: /read our docs/i })
-    expect(docsLink).toBeInTheDocument()
-    expect(docsLink).toHaveAttribute(
-      'href',
-      expect.stringContaining('nextjs.org/docs')
-    )
-  })
-
-  it('renders footer links', () => {
-    render(<Home />)
-
-    const learnLink = screen.getByRole('link', { name: /learn/i })
-    const examplesLink = screen.getByRole('link', { name: /examples/i })
-    const nextjsLink = screen.getByRole('link', { name: /go to nextjs.org/i })
-
-    expect(learnLink).toBeInTheDocument()
-    expect(examplesLink).toBeInTheDocument()
-    expect(nextjsLink).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /complete tech stack/i })
+    ).toBeInTheDocument()
+    expect(screen.getAllByText(/Next.js 15/i)[0]).toBeInTheDocument()
+    expect(screen.getByText(/Core Stack/i)).toBeInTheDocument()
+    expect(screen.getByText(/UI & UX/i)).toBeInTheDocument()
   })
 })
